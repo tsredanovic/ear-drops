@@ -1,4 +1,10 @@
+from core.storage import CleanFileNameStorage
 from django.db import models
+
+
+def spaced_filename(instance, filename):
+    return 'songs/{}'.format(filename)
+
 
 class Song(models.Model):
     title = models.CharField(max_length=200, blank=False)
@@ -18,7 +24,9 @@ class Song(models.Model):
     )
 
     file = models.FileField(
-        null=False, blank=False
+        null=False, blank=False,
+        upload_to=spaced_filename,
+        storage=CleanFileNameStorage
     )
 
     IMPORT = 'import'

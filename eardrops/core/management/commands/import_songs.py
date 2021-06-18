@@ -6,8 +6,8 @@ from django.core.files import File
 from django.db import transaction
 import eyed3
 
-from eardrops.core.helpers import manually_set_value
-from eardrops.core.models import *
+from core.helpers import manually_set_value
+from core.models import *
 
 
 class Command(BaseCommand):
@@ -37,8 +37,11 @@ class Command(BaseCommand):
             for f in filenames if os.path.splitext(f)[1] in valid_extensions
         ]
         file_paths_count = len(file_paths)
+        self.logger.info('Audio files found: {}'.format(file_paths_count))
 
-        for file_path in file_paths:
+        for i, file_path in enumerate(file_paths, 1):
+            self.logger.info('Importing: {} ({}/{})'.format(os.path.basename(file_path), i, file_paths_count))
+
             # Read file
             tag = eyed3.load(file_path).tag
             file_title = tag.title
@@ -78,7 +81,16 @@ class Command(BaseCommand):
                     song, song_created = Song.objects.get_or_create(
                         title=file_title, 
                         artist=artist, 
-                        album=album, 
+                        album=album,
+                        defaults={
+                            'source': Song.IMPORT,
+                            'file': File(f, 
+                            name='{} - {}{}'.format(
+                                file_artist, 
+                                file_title,
+                                os.path.splitext(file_path)[1]
+                                )
+                            )
+                        },
                         source=Song.IMPORT,
-                        file=File(f, name='{} - {}'.format())
-                        )
+                    )
