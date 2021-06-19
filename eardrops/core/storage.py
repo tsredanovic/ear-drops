@@ -1,17 +1,16 @@
 import re
 
-from django.utils.encoding import force_text
 from django.utils.functional import keep_lazy_text
 from django.core.files.storage import FileSystemStorage
 
 
 @keep_lazy_text
-def get_valid_filename(s):
+def get_valid_filename(name):
     """
     >>> get_valid_filename(" tawanda's portrait in 2019.jpg ")
     'tawandas portrait in 2019.jpg'
     """
-    s = force_text(s).strip()
+    s = str(name).strip()
     return re.sub(r'(?u)[^-\w. ]', '', s)
 
 
