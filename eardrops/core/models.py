@@ -42,9 +42,15 @@ class Song(models.Model):
         choices=SOURCE_CHOICES
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Artist(models.Model):
     name = models.CharField(max_length=200, blank=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Album(models.Model):
@@ -56,3 +62,6 @@ class Album(models.Model):
         null=True, blank=True,
         related_name='albums'
     )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
