@@ -40,5 +40,23 @@ class ArtistAdmin(admin.ModelAdmin):
         ) or mark_safe("<span class='errors'>No albums.</span>")
 
 
+class AlbumAdmin(admin.ModelAdmin):
+    model = Album
+
+    list_display = ('name', 'artist', 'songs_list', )
+    list_display_links = ('name', )
+    search_fields = ('name', )
+    ordering = ('-name', )
+
+    @admin.display(description='Songs')
+    def songs_list(self, instance):
+        return format_html_join(
+            mark_safe('<br>'),
+            '{}',
+            ((line,) for line in [song_title for song_title in instance.songs.order_by('title').values_list('title', flat=True)]),
+        ) or mark_safe("<span class='errors'>No songs.</span>")
+
+
 admin.site.register(Song, SongAdmin)
 admin.site.register(Artist, ArtistAdmin)
+admin.site.register(Album, AlbumAdmin)
