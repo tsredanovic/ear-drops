@@ -8,7 +8,7 @@ from core.models import *
 class SongAdmin(admin.ModelAdmin):
     model = Song
 
-    list_display = ('artist', 'title', 'album', 'file', 'source')
+    list_display = ('artist', 'title', 'album', 'file', 'source', 'created_at', 'updated_at', )
     list_display_links = ('title', )
     list_filter = ('source', )
     search_fields = ('title', 'artist', 'album')
@@ -18,7 +18,7 @@ class SongAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
     model = Artist
 
-    list_display = ('name', 'songs_list', 'albums_list', )
+    list_display = ('name', 'songs_list', 'albums_list', 'created_at', 'updated_at', )
     list_display_links = ('name', )
     search_fields = ('name', )
     ordering = ('-name', )
@@ -43,7 +43,7 @@ class ArtistAdmin(admin.ModelAdmin):
 class AlbumAdmin(admin.ModelAdmin):
     model = Album
 
-    list_display = ('name', 'artist', 'songs_list', )
+    list_display = ('name', 'artist', 'songs_list', 'created_at', 'updated_at', )
     list_display_links = ('name', )
     search_fields = ('name', )
     ordering = ('-name', )
