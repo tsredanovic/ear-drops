@@ -85,7 +85,7 @@ class Command(BaseCommand):
                         defaults={
                             'source': Song.IMPORT,
                             'file': File(f, 
-                            name='{} - {}{}'.format(file_artist, file_title, os.path.splitext(file_path)[1]).replace('/', '-')
+                            name='{} - {}{}'.format(file_artist, file_title, os.path.splitext(file_path)[1]).replace('/', ' ')
                             )
                         },
                     )
