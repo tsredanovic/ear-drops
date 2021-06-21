@@ -130,6 +130,7 @@ dmypy.json
 
 # Media
 media
+media_temp
 
 # Mac
 .DS_Store
