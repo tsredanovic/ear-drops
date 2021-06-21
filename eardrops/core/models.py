@@ -38,8 +38,12 @@ class Song(models.Model):
     source = models.CharField(
         max_length=20,
         blank=False,
-        null=False,
         choices=SOURCE_CHOICES
+    )
+
+    youtube_id = models.CharField(
+        max_length=20,
+        blank=True,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
