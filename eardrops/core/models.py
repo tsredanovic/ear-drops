@@ -1,3 +1,4 @@
+from typing import Dict
 from core.storage import CleanFileNameStorage
 from django.db import models
 
@@ -44,6 +45,10 @@ class Song(models.Model):
     youtube_id = models.CharField(
         max_length=20,
         blank=True,
+    )
+
+    youtube_info = models.JSONField(
+        default=dict,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
