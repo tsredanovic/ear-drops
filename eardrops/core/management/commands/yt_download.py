@@ -92,6 +92,7 @@ class Command(BaseCommand):
             tag.artist = data_object['artist']
             tag.title = data_object['track']
             tag.album = data_object.get('album')
+            tag.save()
             
             # Import to DB
             with transaction.atomic():
