@@ -12,16 +12,16 @@ from core.models import *
 
 class Command(BaseCommand):
     """
-    Import local songs.
+    Import Local Songs
 
-    Arguments:
-        --dir_path : Directory from which files will be imported.
-    
     Description:
         Recursively searches provided `dir_path` for `.mp3` files. 
         Imports them with (`artist`, `album`, `title`) tags found on each file 
         or prompts user for providing (`artist`, `title`) tags if not found.
-    
+
+    Arguments:
+        --dir_path : Directory from which files will be imported.
+
     Example call:
         python manage.py import_songs --dir_path "/Users/tonisredanovic/Documents/Music/mymusic"
     """

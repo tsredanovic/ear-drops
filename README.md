@@ -17,6 +17,7 @@
 - [ffmpeg](https://www.ffmpeg.org/download.html)
 - other requirements are Python packages listed in `requirements.txt` file
 
+
 ## First Time Installation
 
 1. Clone this repository
@@ -31,6 +32,10 @@ source venv/bin/activate
 4. Install requirements
 ```bash
 pip install -r requirements.txt
+```
+5. Run migrations (this will create a `sqlite` database with appropriate tables)
+```bash
+python eardrops/manage.py migrate
 ```
 
 
@@ -69,14 +74,28 @@ Imports them with (`artist`, `album`, `title`) tags found on each file
 or prompts user for providing (`artist`, `title`) tags if not found.
 
 #### Arguments
-`--dir_path` : Directory from which files will be imported.
+`--dir_path` : Directory from which files will be imported
 
 #### Example Call
 ```bash
-python manage.py import_songs --dir_path "/path/to/music/dir/"
+python eardrops/manage.py import_songs --dir_path "/path/to/music/dir/"
 ```
 
-### TODO
+### Download Youtube Songs - `yt_download`
+
+Parses a file provided with `file_path` for valid, youtube URLs (skipps already downloaded URLs).
+Downloads audio from all provided URLs and fetches youtube metadata for each download. 
+Fills (`artist`, `album`, `title`) tags from metadata or prompts user for (`artist`, `title`) tags if not found, asks for confirmation on each fill.
+Shows summary of downloads and asks for confirmation before import.
+
+#### Arguments
+`--file_path` : File containg links (separated by linebreaks) to youtube videos from which audio will be downloaded
+
+#### Example Call
+```bash
+python eardrops/manage.py yt_download --file_path "/path/to/file/youtube_urls.txt"
+```
+
 
 ## Disclaimer
 

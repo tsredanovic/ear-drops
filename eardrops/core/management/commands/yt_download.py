@@ -15,7 +15,13 @@ from core.yt_download import *
 
 class Command(BaseCommand):
     """
-    Downloads audio from youtube.
+    Download Youtube Songs
+
+    Description:
+        Parses a file provided with `file_path` for valid youtube URLs (skipps already downloaded URLs).
+        Downloads audio from all provided URLs and fetches youtube metadata for each download. 
+        Fills (`artist`, `album`, `title`) tags from metadata or prompts user for (`artist`, `title`) tags if not found, asks for confirmation on each fill.
+        Shows summary of downloads and asks for confirmation before import.
 
     Arguments:
         --file_path : File containg links (separated by linebreaks) to youtube videos from which audio will be downloaded.
