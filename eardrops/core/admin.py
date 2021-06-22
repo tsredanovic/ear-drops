@@ -11,7 +11,7 @@ class SongAdmin(admin.ModelAdmin):
     list_display = ('artist', 'title', 'album', 'file', 'source', 'created_at', 'updated_at', )
     list_display_links = ('title', )
     list_filter = ('source', )
-    search_fields = ('title', 'artist', 'album')
+    search_fields = ('title', 'artist__name', 'album__name')
     ordering = ('-artist', '-title')
 
 
