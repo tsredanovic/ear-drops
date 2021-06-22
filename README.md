@@ -15,7 +15,7 @@
 
 - [Python 3.5+](https://www.python.org/downloads/)
 - [ffmpeg](https://www.ffmpeg.org/download.html)
-- other requirements are installed with []()
+- other requirements are Python packages listed in `requirements.txt` file
 
 ## First Time Installation
 
@@ -62,7 +62,19 @@ python eardrops/manage.py runserver --noreload
 
 ## Commands
 
-### TODO
+### Import Local Songs - `import_songs`
+
+Recursively searches provided `dir_path` for `.mp3` files. 
+Imports them with (`artist`, `album`, `title`) tags found on each file 
+or prompts user for providing (`artist`, `title`) tags if not found.
+
+#### Arguments
+`--dir_path` : Directory from which files will be imported.
+
+#### Example Call
+```bash
+python manage.py import_songs --dir_path "/path/to/music/dir/"
+```
 
 ### TODO
 
