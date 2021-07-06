@@ -96,6 +96,18 @@ Shows summary of downloads and asks for confirmation before import.
 python eardrops/manage.py yt_download --file_path "/path/to/file/youtube_urls.txt"
 ```
 
+### Find similar artists - `similar_artists`
+
+Finds all pairs of artists whose names have similarity (Levenshtein distance) above defined threshold.
+
+#### Arguments
+`--threshold` : Similarity detection threshold - only pairs with similarity above will be detected
+
+#### Example Call
+```bash
+python manage.py similar_artists --threshold 0.7
+```
+
 
 ## Disclaimer
 
