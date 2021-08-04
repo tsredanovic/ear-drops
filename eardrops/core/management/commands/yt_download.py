@@ -27,7 +27,7 @@ class Command(BaseCommand):
         --file_path : File containg links (separated by linebreaks) to youtube videos from which audio will be downloaded.
 
     Example call:
-        python manage.py yt_download --file_path "/Users/tonisredanovic/Documents/Music/mymusic/music_MusicYT8.txt"
+        python manage.py yt_download --file_path "/Users/tonisredanovic/Documents/Music/imports/YT11.txt"
     """
 
     logger = logging.getLogger(__name__)
