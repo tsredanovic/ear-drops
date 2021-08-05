@@ -11,7 +11,7 @@ from core.models import *
 
 class Command(BaseCommand):
     """
-    Edit song's tags
+    Edit song's data
 
     Description:
         Prompts user for (`artist`, `album`, `title`) to edit exiting song.

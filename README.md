@@ -108,6 +108,18 @@ Finds all pairs of artists whose names have similarity (Levenshtein distance) ab
 python manage.py similar_artists --threshold 0.7
 ```
 
+### Edit a song - `edit_song`
+
+Prompts user for (`artist`, `album`, `title`) to edit exiting song.
+
+#### Arguments
+`--song_id` : ID of a song to edit
+
+#### Example Call
+```bash
+python manage.py edit_song --song_id 665
+```
+
 
 ## Disclaimer
 
