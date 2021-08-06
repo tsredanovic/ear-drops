@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 
 from django.core.management.base import BaseCommand
@@ -34,12 +35,15 @@ class Command(BaseCommand):
 
         # Fetch song
         song = Song.objects.get(id=song_id)
-        self.logger.info('Editing song: {}\n\tArtist: {}\n\tTitle: {}\n\tAlbum: {}'.format(song.file, song.artist.name, song.title, song.album.name))
+        tag = eyed3.load(song.file.path).tag
+        self.logger.info('Editing song: {}\n\tArtist | DB: {} | Tag: {}\n\tTitle | DB: {} | Tag: {}\n\tAlbum | DB: {} | Tag: {}'.format(
+            song.file, song.artist.name, tag.artist, song.title, tag.title, song.album.name, tag.album
+            ))
 
         # Input new data
-        new_artist_name = manually_set_value('artist', default_value=song.artist.name)
-        new_title = manually_set_value('title', default_value=song.title)
-        new_album_name = manually_set_value('album', default_value=song.album.name)
+        new_artist_name = manually_set_value('artist')
+        new_title = manually_set_value('title')
+        new_album_name = manually_set_value('album')
 
         # Confirm new data
         print('New song data:\n\tArtist: {}\n\tTitle: {}\n\tAlbum: {}'.format(new_artist_name, new_title, new_album_name))
@@ -49,39 +53,50 @@ class Command(BaseCommand):
 
         # Save new values
         is_changed = False
-        tag = eyed3.load(song.file.path).tag
 
-        if new_artist_name != song.artist.name if song.artist else None:
+        db_artist_name = song.artist.name if song.artist else ''
+        if new_artist_name != db_artist_name:
             old_artist = song.artist
             new_artist, artist_created = Artist.objects.get_or_create(
                 name=new_artist_name
                 )
             song.artist = new_artist
-            tag.artist = new_artist.name
             if not old_artist.songs.exists():
                 old_artist.delete()
             is_changed = True
-            self.logger.info('Artist updated.')
+            self.logger.info('DB artist updated.')
+        if new_artist_name != tag.artist:
+            tag.artist = new_artist_name
+            is_changed = True
+            self.logger.info('Tag artist updated.')
 
-
-        if new_album_name != song.album.name if song.album else '':
+        db_album_name = song.album.name if song.album else ''
+        if new_album_name != db_album_name:
             old_album = song.album
             new_album, album_created = Album.objects.get_or_create(
                 name=new_album_name, 
                 artist=new_artist
                 )
             song.album = new_album
-            tag.album = new_album.name
             if not old_album.songs.exists():
                 old_album.delete()
             is_changed = True
             self.logger.info('Album updated.')
-            
-        if new_title != song.title:
+        if new_album_name != tag.album:
+            tag.album = new_album_name
+            is_changed = True
+            self.logger.info('Tag album updated.')
+        
+        db_title = song.title if song.title else ''
+        if new_title != db_title:
             song.title = new_title
             tag.title = new_title
             is_changed = True
             self.logger.info('Title updated.')
+        if new_title != tag.title:
+            tag.title = new_title
+            is_changed = True
+            self.logger.info('Tag title updated.')
         
         if not is_changed:
             self.logger.info('No changes detected. Exiting.')
@@ -93,4 +108,6 @@ class Command(BaseCommand):
         song.file.name = 'songs/{}'.format(new_file_name)
         song.save()
         tag.save()
-        self.logger.info('Song updated.')
+        self.logger.info('Song updated: {}\n\tArtist | DB: {} | Tag: {}\n\tTitle | DB: {} | Tag: {}\n\tAlbum | DB: {} | Tag: {}'.format(
+            song.file, song.artist.name, tag.artist, song.title, tag.title, song.album.name, tag.album
+            ))
