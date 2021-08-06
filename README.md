@@ -120,6 +120,18 @@ Prompts user for (`artist`, `album`, `title`) to edit exiting song.
 python manage.py edit_song --song_id 665
 ```
 
+### Validate song data - `tag_vs_db`
+
+Compares tag values of (`artist`, `album`, `title`) on a song file against the same values stored in database for every song. Prints out any inconsistencies.
+
+#### Arguments
+`--song_id` : ID of a song to edit
+
+#### Example Call
+```bash
+python manage.py edit_song --song_id 665
+```
+
 
 ## Disclaimer
 
