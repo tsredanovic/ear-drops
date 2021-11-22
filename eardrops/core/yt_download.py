@@ -3,7 +3,7 @@ import os
 import re
 
 import eyed3
-import youtube_dl
+import yt_dlp
 
 
 def process_input(lines):
@@ -29,7 +29,7 @@ def download_mp3(url, dir_path):
         }],
         'outtmpl': '{}/%(id)s.%(ext)s'.format(dir_path),
     }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         video_info = ydl.extract_info(url, download=True)
 
     return video_info
@@ -39,7 +39,7 @@ def get_info(url):
     ydl_opts = {
         'nocheckcertificate': True,
     }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         video_info = ydl.extract_info(url, download=False)
 
     return video_info
